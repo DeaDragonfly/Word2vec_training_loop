@@ -1,102 +1,135 @@
-##word2vec_training_loop
+# word2vec_training_loop
 
-This project is a from-scratch implementation of the Word2Vec training loop using pure NumPy.
+Implementation of the **Word2Vec training loop** from scratch using pure **NumPy** (no PyTorch / TensorFlow).
 
-The goal was not to use any ML frameworks, but to understand how word embeddings are actually learned: from raw text → to vectors → through gradients and optimization.
+The goal of this project is to understand how word embeddings are learned: from raw text to vector representations via gradients and optimization.
 
-What’s inside
+---
 
-This is a skip-gram with negative sampling implementation.
+## Overview
 
-The code includes:
+This project implements **skip-gram with negative sampling**.
 
-text loading from a .docx file
-preprocessing (tokenization, stop-word removal, sentence splitting)
-vocabulary construction with min_count filtering
-generation of (center, context) training pairs
-negative sampling
-full training loop:
-forward pass
-loss computation
-gradient calculation
-parameter updates (SGD)
-cosine similarity search for nearest words
+The pipeline includes:
+- text preprocessing
+- vocabulary construction with frequency filtering
+- training pair generation
+- negative sampling
+- forward pass
+- loss computation
+- gradient calculation
+- parameter updates (SGD)
+- similarity search using cosine similarity
 
-No PyTorch, no TensorFlow — only NumPy.
+---
 
-How it works (short version)
+## How it works
 
 For each word in a sentence:
-
-take it as a center word
-look at nearby words (window)
-treat them as positive examples
-sample random words as negative examples
+- the word is treated as a **center word**
+- nearby words (within a window) are treated as **context words**
+- random words are sampled as **negative examples**
 
 The model learns to:
+- increase similarity between real context pairs
+- decrease similarity between random pairs
 
-increase similarity between real neighbors
-decrease similarity between random words
-Dataset
+---
 
-The model is trained on a custom text corpus about seals and pinnipeds.
+## Dataset
+
+The model is trained on a custom `.docx` corpus about seals and pinnipeds.
 
 Preprocessing steps:
+- lowercase conversion
+- sentence splitting
+- regex-based tokenization (supports hyphenated words)
+- stop-word removal
+- filtering rare words (`min_count = 2`)
 
-lowercase
-sentence splitting
-regex tokenization (supports hyphenated words)
-stop-word removal
-removal of rare words (min_count = 2)
-Training
+---
 
-Main parameters:
+## Training configuration
 
-embedding size: 50
-window size: 2
-negative samples: 5
-learning rate: 0.025
+Default parameters:
 
-You can choose the number of epochs when running the script.
+- embedding size: `50`
+- window size: `2`
+- negative samples: `5`
+- learning rate: `0.025`
+- Number of epochs is provided at runtime.
+  
+---
 
-Example output:
+## Example training output:
 
-Epoch 1, loss: 3.69
-Epoch 2, loss: 2.30
-Epoch 3, loss: 1.11
-...
 
-Loss decreasing = training works as expected.
+Epoch 1, loss: 3.69. 
+Epoch 2, loss: 2.30.
+Epoch 3, loss: 1.11.
 
-Results
+
+Loss decreases as expected.
+
+---
+
+## Results
 
 After training, you can query similar words:
 
 seals → sea, mammals, walruses, lions
 behavior → feeding, mating, territory
 
-Results are not perfect (small dataset), but they show that the model learns meaningful relationships.
 
-Files saved
-W_in.npy – input embeddings
-W_out.npy – output embeddings
-word_to_id.json – mapping word → index
-vocab.json – list of words
-Limitations
+Results reflect contextual similarity within the dataset.
+
+---
+
+## Output files
+
+- `W_in.npy` — input embeddings  
+- `W_out.npy` — output embeddings  
+- `word_to_id.json` — word → index mapping  
+- `vocab.json` — list of vocabulary words  
+
+---
+
+## How to run
+
+Install dependencies:
+
+```bash
+pip install numpy python-docx
+```
+
+Run the script:
+
+```bash
+python word2vec_training_loop.py
+```
+Enter the number of epochs when prompted.
+
+---
+
+## Limitations
 
 This is a simplified educational implementation:
 
-small and domain-specific dataset
-uniform negative sampling (not frequency-based)
-no subsampling of frequent words
-no batching or performance optimizations
-evaluation is qualitative only
-Why this project
+- small, domain-specific dataset
+- uniform negative sampling (instead of frequency-based)
+- no subsampling of frequent words
+- no batching or optimization tricks
+- evaluation is qualitative only
 
-The point was to understand:
+---
 
-how Word2Vec actually works under the hood
-how gradients are derived and applied
-how embeddings emerge from co-occurrence
+## Purpose
 
-Not just to use a library, but to build the core logic manually.
+This project demonstrates understanding of:
+
+- skip-gram training logic
+- negative sampling
+- gradient-based optimization
+- how embeddings emerge from co-occurrence
+
+The focus is on implementing the training loop manually rather than using high-level libraries.
