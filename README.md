@@ -1,4 +1,4 @@
-word2vec_training_loop
+##word2vec_training_loop
 
 This project is a from-scratch implementation of the Word2Vec training loop using pure NumPy.
 
