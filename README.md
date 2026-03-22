@@ -1,6 +1,6 @@
 # word2vec_training_loop
 
-Implementation of the **Word2Vec training loop** from scratch using pure **NumPy** (no PyTorch / TensorFlow).
+From-scratch implementation of Word2Vec (skip-gram with negative sampling) in pure NumPy.
 
 The goal of this project is to understand how word embeddings are learned: from raw text to vector representations via gradients and optimization.
 
@@ -49,6 +49,16 @@ Preprocessing steps:
 
 ---
 
+## Project structure
+
+word2vec_numpy.py
+
+seals.docx
+
+README.md
+
+---
+
 ## Training configuration
 
 Default parameters:
@@ -64,9 +74,11 @@ Default parameters:
 ## Example training output:
 
 
-Epoch 1, loss: 3.69. 
-Epoch 2, loss: 2.30.
-Epoch 3, loss: 1.11.
+Epoch 1, loss: 3.69
+
+Epoch 2, loss: 2.30
+
+Epoch 3, loss: 1.11
 
 
 Loss decreases as expected.
